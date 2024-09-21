@@ -1,0 +1,37 @@
+props:
+  name1: sub1
+  name2: sub2
+
+spring:
+  application:
+    name: pulsar-poc
+
+  pulsar:
+    client:
+      service-url: ${PULSAR_SERVICE_URL}
+      authentication:
+        plugin-class-name: org.apache.pulsar.client.impl.auth.AuthenticationToken
+        param:
+          token: ${PULSAR_API_KEY}
+
+
+server:
+  http2:
+    enabled: true
+  port: 8080
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-exception: true
+
+springdoc:
+  packagesTo-scan:
+    - io.ingestify.pulsar_poc
+  paths-to-match: /**
+  swagger-ui:
+    use-root-path: true
+    deepLinking: true
+    displayRequestDuration: true
+    filter: true
+    persistAuthorization: true
+    # docExpansion: none
