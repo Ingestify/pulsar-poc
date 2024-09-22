@@ -7,12 +7,14 @@ import org.apache.pulsar.client.api.Message;
 import lombok.SneakyThrows;
 import reactor.core.publisher.Mono;
 
-public non-sealed abstract class OneByOnePulsarTopic<T> extends ReactivePulsarTopic<T> {
-    public abstract Mono<Void> listenSingle(Mono<Message<T>> message);
+public non-sealed abstract class OneByOnePulsarTopic<T> extends ReactivePulsarTopicConsumner<T> {
+    public abstract Mono<Void> listen(Mono<Message<T>> message);
 
     @SneakyThrows
     @Override
     protected Method getMethod() {
-        return this.getClass().getMethod("listen", Mono.class);
+        var method = this.getClass().getMethods()[0];
+        
+        return method;
     }
 }

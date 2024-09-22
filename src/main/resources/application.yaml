@@ -1,6 +1,6 @@
-props:
-  name1: sub1
-  name2: sub2
+# props:
+#   name1: sub1
+#   name2: sub2
 
 spring:
   application:

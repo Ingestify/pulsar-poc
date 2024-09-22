@@ -1,0 +1,9 @@
+{
+    "subscriptionName": "test-sub",
+    "topics": [
+      "persistent://tenant/namespace/topic"
+    ],
+    "subscriptionType": "Shared",
+    "autoStartup": true,
+    "stream": true
+}

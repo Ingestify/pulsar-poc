@@ -1,4 +1,4 @@
-package io.ingestify.pulsar_poc;
+package io.ingestify.pulsar_poc.api;
 
 import java.util.Set;
 
@@ -6,13 +6,11 @@ import org.apache.pulsar.client.admin.PulsarAdminException;
 import org.apache.pulsar.client.api.PulsarClientException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.pulsar.reactive.listener.ReactivePulsarContainerProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import io.ingestify.pulsar_poc.topics.common.SubscriptionData;
 import io.ingestify.pulsar_poc.topics.poc_topic.POCTopic;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -51,22 +49,10 @@ public class ConsumerController {
         value = "/createSubscription"
     )
     public ResponseEntity<Void> createSubscription(
-        // @RequestParam(value = "topic", required = true) String topic,
-        // @RequestParam(value = "message", required = true) String subscriptionName,
-        // @RequestParam(value = "subscriptionType", required = true) SubscriptionType subscriptionType,
-        @RequestBody SubscriptionData body
+        @RequestBody ListenerProcessorInitilizerDTO body
     ) throws PulsarAdminException, PulsarClientException {
-        
-        // pulsarAdmin.topics().createSubscription(topic, subscriptionName, MessageId.earliest);
-        // DeadLetterPolicy.builder()
-                    // .maxRedeliverCount(subscriptionData.maxRedeliverCount())
-                    // .deadLetterTopic(subscriptionData.deadLetterTopic())
-                    // .build()
 
-        ReactivePulsarContainerProperties<String> containerProps = new ReactivePulsarContainerProperties<>();
-        containerProps.setConcurrency(0);
-
-        pocTopic.addMessageListener(body, containerProps);
+        pocTopic.addMessageListener(body.buildInitilizer());
 
         return ResponseEntity.ok(null);
     }
